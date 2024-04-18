@@ -11,6 +11,8 @@ The first step would be to clone the project using the following command: -
 git clone https://github.com/Bhooyas/ConditionalVAE.git
 ```
 
+All the configurations for the following are store in `config.py`. If required can be changed as desired.
+
 The next step we go into the cloned directory and install the requirements using the follwoing command: - 
 ```
 cd ConditionalVAE
@@ -23,7 +25,7 @@ In the next step we train the model using `train.py` script. We use the `../data
 python train.py
 ```
 
-After running the above command, we will have a file named `MNIST_CVAE.pt`. These are the trained weights of the model. You can use this model weights if you want directly. In the next step we create a file named `mu_sigma.npz` which contains the min and max range of the mu and sigma.
+After running the above command, we will have a file named `MNIST_CVAE.safetensors`. These are the trained weights of the model. You can use this model weights if you want directly. In the next step we create a file named `mu_sigma.npz` which contains the min and max range of the mu and sigma.
 ```
 python encoding.py
 ```
@@ -37,5 +39,5 @@ streamlit run app.py
 - [x] Train the model
 - [x] Create a basic UI using Streamlit
 - [x] Update the Readme
-- [ ] Convert the saved model to SafeTensor
+- [x] Convert the saved model to SafeTensor
 - [ ] Add test based input for generation.

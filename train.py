@@ -5,17 +5,12 @@ from torchvision import datasets
 from torchvision.transforms import ToTensor
 from tqdm import tqdm
 from model import CVAE
-
+from config import *
+from safetensors.torch import save_model
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-batch_size = 64
-train_data = datasets.MNIST(root="../data", train=True, download=True, transform=ToTensor())
+train_data = datasets.MNIST(root=data_dir, train=True, download=True, transform=ToTensor())
 image_loader = DataLoader(dataset=train_data, batch_size=batch_size, shuffle=True)
-image_channel = 1
-z_dim = 10
-classes = 10
-lr = 0.001
-epochs = 100
 
 
 model = CVAE(image_channel=image_channel, z_dim=z_dim, classes=classes).to(device)
@@ -43,4 +38,4 @@ for epoch in range(epochs):
 		pbar.set_postfix({"Loss": mean(losses)})
 
 model.cpu()
-torch.save(model, "MNIST_CVAE.pt")
+save_model(model, model_name)

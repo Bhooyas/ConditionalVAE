@@ -6,28 +6,31 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 from tqdm import tqdm
+from config import *
+from safetensors.torch import load_model
 
-test_data = datasets.MNIST(root="../data", train=False, download=True, transform=ToTensor())
-train_data = datasets.MNIST(root="../data", train=True, download=True, transform=ToTensor())
+test_data = datasets.MNIST(root=data_dir, train=False, download=True, transform=ToTensor())
+train_data = datasets.MNIST(root=data_dir, train=True, download=True, transform=ToTensor())
 
-model = torch.load("MNIST_CVAE.pt")
+model = CVAE(image_channel=image_channel, z_dim=z_dim, classes=classes)
+load_model(model, model_name)
 model.eval()
 
 def get_encode():
 	mus = []
 	sigmas = []
 	for x, _ in tqdm(test_data):
-		y_encoded = torch.nn.functional.one_hot(torch.tensor([0]), 10).reshape(-1, 10)
+		y_encoded = torch.nn.functional.one_hot(torch.tensor([0]), classes).reshape(-1, classes)
 		x = x.reshape(-1, 1, 28, 28)
 		_, mu, sigma = model(x, y_encoded)
-		mus.append(mu.numpy().reshape(10))
-		sigmas.append(sigma.numpy().reshape(10))
+		mus.append(mu.numpy().reshape(z_dim))
+		sigmas.append(sigma.numpy().reshape(z_dim))
 	for x, _ in tqdm(train_data):
-		y_encoded = torch.nn.functional.one_hot(torch.tensor([0]), 10).reshape(-1, 10)
+		y_encoded = torch.nn.functional.one_hot(torch.tensor([0]), classes).reshape(-1, classes)
 		x = x.reshape(-1, 1, 28, 28)
 		_, mu, sigma = model(x, y_encoded)
-		mus.append(mu.numpy().reshape(10))
-		sigmas.append(sigma.numpy().reshape(10))
+		mus.append(mu.numpy().reshape(z_dim))
+		sigmas.append(sigma.numpy().reshape(z_dim))
 	return mus, sigmas
 
 
