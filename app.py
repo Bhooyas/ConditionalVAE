@@ -1,15 +1,18 @@
 import streamlit as st
-from inference import infer
+from inference import *
 import math
 
-st.title('Number Generator using Conditional VAE')
+def generate_num(ip_str):
+    if ip_str == "":
+        return
+    
+    num = get_num(ip_str)
+    st.write(f"Detected number {num}")
 
-num = st.slider("Select a number to generate", 0, 9)
-times = st.slider("Select number of images to generate", 9, 225, value=100)
-
-if st.button('Generate Images'):
+    if num is None:
+        return
+    
     images = infer(num, times)
-
     grid = math.ceil(math.sqrt(times))
 
     st.subheader('Generated Images')
@@ -20,4 +23,17 @@ if st.button('Generate Images'):
             if index < len(images):
                 cols[j].image(images[index].squeeze(), use_column_width=True)
             else:
-                break
+                return
+
+st.title('Number Generator using Conditional VAE')
+
+ip_str = st.text_input("Enter an number", key="text")
+times = st.slider("Select number of images to generate", 9, 225, value=100)
+
+if st.button('Generate Images'):
+    generate_num(ip_str)
+
+if st.button("Generate Sample Image"):
+    ip_str = get_sample()
+    st.write(f"Input Sentence: - {ip_str}")
+    generate_num(ip_str)

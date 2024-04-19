@@ -2,7 +2,7 @@
 
 ![ConditionalVAE](https://socialify.git.ci/Bhooyas/ConditionalVAE/image?font=KoHo&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Auto)
 
-A simple Conditional Variational Autoencoder written in PyTorch for MNIST dataset. Added a simple basic UI using Streamlit for it.
+A simple Conditional Variational Autoencoder written in PyTorch for MNIST dataset. Added a simple basic UI using Streamlit for it. The streamlit UI takes in a string input like `Generate an image of number five` gets the number in this case `5` and generates images of this numbers. Have attached a text file named `string_input.txt` which has some samples
 
 ## Installation 
 
@@ -40,4 +40,4 @@ streamlit run app.py
 - [x] Create a basic UI using Streamlit
 - [x] Update the Readme
 - [x] Convert the saved model to SafeTensor
-- [ ] Add test based input for generation.
+- [x] Add test based input for generation.

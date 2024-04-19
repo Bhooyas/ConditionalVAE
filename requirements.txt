@@ -4,3 +4,4 @@ tqdm==4.66.2
 matplotlib==3.7.5
 streamlit==1.33.0
 safetensor==0.4.3
+fuzzywuzzy==0.18.0
